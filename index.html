@@ -19,13 +19,11 @@
             color: #1a3b1a;
         }
 
-        /* smooth container */
         .container {
             max-width: 860px;
             margin: 0 auto;
         }
 
-        /* header card */
         .hero {
             background: linear-gradient(135deg, #2b6e2f, #1f4f23);
             border-radius: 2rem;
@@ -33,12 +31,10 @@
             margin-bottom: 2rem;
             box-shadow: 0 12px 24px rgba(0, 20, 0, 0.12);
             color: white;
-            transition: all 0.2s;
         }
         .hero h1 {
             font-size: 1.9rem;
             font-weight: 700;
-            letter-spacing: -0.3px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -55,7 +51,6 @@
             margin-top: 0.6rem;
             opacity: 0.9;
             font-size: 0.95rem;
-            line-height: 1.4;
         }
         .score-panel {
             background: #fef7e0;
@@ -69,7 +64,6 @@
             flex-wrap: wrap;
             gap: 0.8rem;
             font-weight: 600;
-            backdrop-filter: blur(2px);
         }
         .score-badge {
             background: #2b6e2f;
@@ -115,7 +109,6 @@
         }
         .btn-outline:active { transform: scale(0.96); }
 
-        /* unit cards */
         .unit-card {
             background: #ffffffdd;
             backdrop-filter: blur(2px);
@@ -123,7 +116,6 @@
             margin-bottom: 1.8rem;
             overflow: hidden;
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
-            transition: 0.15s;
             border: 1px solid rgba(160, 200, 120, 0.5);
         }
         .unit-title {
@@ -132,7 +124,6 @@
             font-size: 1.4rem;
             font-weight: 700;
             color: white;
-            letter-spacing: -0.2px;
             border-bottom: 2px solid #ffd966;
         }
         .questions-list {
@@ -142,22 +133,20 @@
             gap: 1.5rem;
         }
 
-        /* each question row */
         .question-row {
             background: white;
             border-radius: 1.4rem;
             padding: 1.2rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
             border-left: 6px solid #8bc34a;
-            transition: all 0.2s;
         }
         .question-text {
             font-size: 1rem;
             line-height: 1.55;
             color: #1f3b1a;
             margin-bottom: 1rem;
-            word-break: break-word;
             font-weight: 500;
+            word-break: break-word;
         }
         .blank-input {
             display: inline-block;
@@ -175,7 +164,6 @@
             font-family: 'SF Mono', monospace;
             text-align: center;
             transition: 0.2s;
-            font-weight: 500;
         }
         .blank-input input:focus {
             outline: none;
@@ -202,11 +190,16 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: 0.1s;
         }
         .check-single:active {
             background: #d8e9d0;
             transform: scale(0.97);
+        }
+        .feedback-area {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
         }
         .feedback-badge {
             font-size: 0.8rem;
@@ -214,6 +207,8 @@
             border-radius: 2rem;
             background: #f2f2ea;
             color: #5a6e4a;
+            display: inline-block;
+            width: fit-content;
         }
         .feedback-correct {
             background: #dff0df;
@@ -223,7 +218,21 @@
             background: #ffe7e4;
             color: #bc4a2e;
         }
-
+        .temp-answer {
+            font-size: 0.8rem;
+            padding: 0.35rem 1rem;
+            background: #fff3cf;
+            color: #8a6c1f;
+            border-radius: 2rem;
+            display: inline-block;
+            width: fit-content;
+            animation: fadeOut 10s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; display: none; }
+        }
         footer {
             text-align: center;
             margin: 2rem 0 1rem;
@@ -231,52 +240,20 @@
             color: #698a58;
         }
 
-        /* mobile optimizations */
         @media (max-width: 600px) {
-            body {
-                padding: 0.7rem;
-            }
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-            .unit-title {
-                font-size: 1.2rem;
-                padding: 0.7rem 1.2rem;
-            }
-            .questions-list {
-                padding: 1rem;
-                gap: 1.2rem;
-            }
-            .question-row {
-                padding: 1rem;
-            }
-            .blank-input input {
-                min-width: 90px;
-                max-width: 150px;
-                padding: 6px 10px;
-                font-size: 0.8rem;
-            }
-            .question-text {
-                font-size: 0.92rem;
-            }
-            .btn, .check-single {
-                padding: 0.45rem 0.9rem;
-                font-size: 0.75rem;
-            }
-            .score-badge {
-                font-size: 0.9rem;
-            }
+            body { padding: 0.7rem; }
+            .hero h1 { font-size: 1.5rem; }
+            .unit-title { font-size: 1.2rem; padding: 0.7rem 1.2rem; }
+            .questions-list { padding: 1rem; gap: 1.2rem; }
+            .question-row { padding: 1rem; }
+            .blank-input input { min-width: 90px; max-width: 150px; padding: 6px 10px; font-size: 0.8rem; }
+            .question-text { font-size: 0.92rem; }
+            .btn, .check-single { padding: 0.45rem 0.9rem; font-size: 0.75rem; }
+            .score-badge { font-size: 0.9rem; }
         }
-
-        /* very small screens */
         @media (max-width: 450px) {
-            .blank-input input {
-                min-width: 75px;
-                max-width: 120px;
-            }
-            .action-buttons {
-                gap: 0.5rem;
-            }
+            .blank-input input { min-width: 75px; max-width: 120px; }
+            .action-buttons { gap: 0.5rem; }
         }
     </style>
 </head>
@@ -297,13 +274,12 @@
     </div>
 
     <div id="questionsContainer"></div>
-    <footer>💡 Case‑insensitive • Synonyms work (e.g., infertile/poor) • Tap a blank to answer</footer>
+    <footer>💡 Case‑insensitive • Synonyms work (e.g., infertile/poor). Wrong answers show correct answer for 10 seconds.</footer>
 </div>
 
 <script>
     // --------------------------------------------------------------
     // Full English question bank (preserves exact format with [answer]{.underline})
-    // Each numbered line is treated as a standalone question
     // --------------------------------------------------------------
     const rawQuestionData = `
 Unit 1
@@ -394,13 +370,11 @@ Unit 7
 11 [Poverty]{.underline} is the root problem of food shortages in the Sahel. Therefore, the best solution is to develop the [rural]{.underline} [economy]{.underline} .
 `;
 
-    // ------- parser: split into units & questions -------
     function parseFullText(text) {
         const lines = text.split(/\r?\n/);
         let units = [];
         let currentUnit = "Start";
         let currentQuestions = [];
-        
         for (let line of lines) {
             line = line.trim();
             if (line === "") continue;
@@ -420,11 +394,8 @@ Unit 7
                 if (currentQuestions.length > 0) {
                     let last = currentQuestions.length - 1;
                     currentQuestions[last] += " " + line;
-                } else {
-                    // edge case: line without number but belongs to prior? ignore but safe
-                    if(currentQuestions.length === 0 && currentUnit !== "Start") {
-                        currentQuestions.push(line);
-                    }
+                } else if (currentQuestions.length === 0 && currentUnit !== "Start") {
+                    currentQuestions.push(line);
                 }
             }
         }
@@ -449,9 +420,8 @@ Unit 7
     }
     
     const questionBank = parseFullText(rawQuestionData);
-    let allQuestionComponents = []; // store each DOM wrapper + metadata
-    
-    // answer comparison (flexible)
+    let allQuestionComponents = []; // each: { inputs, blanksMeta, feedbackSpan, tempAnswerSpan, timerId }
+
     function isAnswerMatch(userInput, possibleSet) {
         let normalized = userInput.trim().toLowerCase().replace(/[^\w\s\u4e00-\u9fa5\-]/g, '').replace(/\s+/g, ' ').trim();
         for (let std of possibleSet) {
@@ -462,132 +432,76 @@ Unit 7
         }
         return false;
     }
-    
-    // render entire page
-    function renderQuiz() {
-        const container = document.getElementById('questionsContainer');
-        container.innerHTML = '';
-        allQuestionComponents = [];
-        let totalBlanks = 0;
-        for (let q of questionBank) totalBlanks += q.blanks.length;
-        document.getElementById('globalScoreDisplay').innerText = `0 / ${totalBlanks}`;
-        
-        let currentUnitGroup = null;
-        let unitDiv = null;
-        let questionsArea = null;
-        
-        for (let idx = 0; idx < questionBank.length; idx++) {
-            const q = questionBank[idx];
-            // if unit changes, create new unitCard
-            if (!unitDiv || currentUnitGroup !== q.unit) {
-                if (unitDiv) container.appendChild(unitDiv);
-                unitDiv = document.createElement('div');
-                unitDiv.className = 'unit-card';
-                const titleDiv = document.createElement('div');
-                titleDiv.className = 'unit-title';
-                titleDiv.innerText = q.unit;
-                unitDiv.appendChild(titleDiv);
-                questionsArea = document.createElement('div');
-                questionsArea.className = 'questions-list';
-                unitDiv.appendChild(questionsArea);
-                currentUnitGroup = q.unit;
-            }
-            
-            // create question row
-            const qRow = document.createElement('div');
-            qRow.className = 'question-row';
-            // replace blanks with input fields
-            let blankIndex = 0;
-            const blanksMeta = q.blanks;
-            let renderedHtml = q.raw.replace(/\[([^\]]+)\]\{\.underline\}/g, () => {
-                const ansMeta = blanksMeta[blankIndex];
-                blankIndex++;
-                return `<span class="blank-input"><input type="text" data-idx="${blankIndex-1}" placeholder="_____" autocomplete="off"></span>`;
-            });
-            const textDiv = document.createElement('div');
-            textDiv.className = 'question-text';
-            textDiv.innerHTML = renderedHtml;
-            qRow.appendChild(textDiv);
-            
-            const footerDiv = document.createElement('div');
-            footerDiv.className = 'question-footer';
-            const checkBtn = document.createElement('button');
-            checkBtn.className = 'check-single';
-            checkBtn.innerHTML = '✓ Check';
-            const feedbackSpan = document.createElement('span');
-            feedbackSpan.className = 'feedback-badge';
-            feedbackSpan.innerText = '⚡ pending';
-            footerDiv.appendChild(checkBtn);
-            footerDiv.appendChild(feedbackSpan);
-            qRow.appendChild(footerDiv);
-            questionsArea.appendChild(qRow);
-            
-            // collect input fields
-            const inputs = qRow.querySelectorAll('.blank-input input');
-            const inputsArr = Array.from(inputs);
-            const questionRecord = {
-                row: qRow,
-                inputs: inputsArr,
-                blanksMeta: blanksMeta,
-                feedbackSpan: feedbackSpan,
-                checkBtn: checkBtn
-            };
-            allQuestionComponents.push(questionRecord);
-            
-            // bind check event
-            checkBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                checkSingleQuestion(questionRecord);
-            });
-            
-            // optional: on input change reset border style gently (not needed for core)
-            inputsArr.forEach(inp => {
-                inp.addEventListener('input', () => {
-                    inp.style.borderColor = "#c9e0bb";
-                    inp.style.backgroundColor = "#fefcf5";
-                });
-            });
+
+    function clearTempAnswer(comp) {
+        if (comp.tempAnswerSpan) {
+            comp.tempAnswerSpan.remove();
+            comp.tempAnswerSpan = null;
         }
-        if (unitDiv) container.appendChild(unitDiv);
-        
-        // attach global buttons
-        document.getElementById('checkAllBtn').onclick = () => checkAllQuestions();
-        document.getElementById('resetAllBtn').onclick = () => resetAll();
-        document.getElementById('showAllAnswersBtn').onclick = () => showHints();
+        if (comp.timerId) {
+            clearTimeout(comp.timerId);
+            comp.timerId = null;
+        }
     }
-    
-    function checkSingleQuestion(rec) {
+
+    function showTempAnswer(comp, wrongBlanks) {
+        clearTempAnswer(comp);
+        // wrongBlanks: [{ index, correctAnswerStr }]
+        if (!wrongBlanks.length) return;
+        const messages = wrongBlanks.map(w => `Blank ${w.index+1}: ${w.correctAnswerStr}`);
+        const answerDiv = document.createElement('div');
+        answerDiv.className = 'temp-answer';
+        answerDiv.innerText = `📝 ${messages.join(' · ')} (Correct answer will disappear in 10s)`;
+        comp.feedbackSpan.parentNode.insertBefore(answerDiv, comp.feedbackSpan.nextSibling);
+        comp.tempAnswerSpan = answerDiv;
+        comp.timerId = setTimeout(() => {
+            if (comp.tempAnswerSpan) {
+                comp.tempAnswerSpan.remove();
+                comp.tempAnswerSpan = null;
+            }
+            comp.timerId = null;
+        }, 10000);
+    }
+
+    function checkSingleQuestion(comp) {
+        const inputs = comp.inputs;
+        const blanks = comp.blanksMeta;
         let correctCount = 0;
-        const inputs = rec.inputs;
-        const blanks = rec.blanksMeta;
+        const wrongBlanks = [];
         for (let i=0; i<inputs.length; i++) {
             const inp = inputs[i];
-            const userAnswer = inp.value;
+            const userVal = inp.value;
             const possible = blanks[i].possibleAnswers;
-            const correct = isAnswerMatch(userAnswer, possible);
-            if (correct) {
+            const ok = isAnswerMatch(userVal, possible);
+            if (ok) {
                 correctCount++;
                 inp.style.borderColor = "#5fad41";
                 inp.style.backgroundColor = "#e6f5e3";
             } else {
                 inp.style.borderColor = "#e27c5c";
                 inp.style.backgroundColor = "#fff1ef";
+                // record correct answer for display
+                const correctAns = blanks[i].possibleAnswers.join(' / ');
+                wrongBlanks.push({ index: i, correctAnswerStr: correctAns });
             }
         }
         const total = inputs.length;
         if (correctCount === total && total > 0) {
-            rec.feedbackSpan.innerHTML = '✅ Perfect!';
-            rec.feedbackSpan.className = 'feedback-badge feedback-correct';
+            comp.feedbackSpan.innerHTML = '✅ Perfect! All correct.';
+            comp.feedbackSpan.className = 'feedback-badge feedback-correct';
+            clearTempAnswer(comp);
         } else if (correctCount === 0) {
-            rec.feedbackSpan.innerHTML = '❌ None correct';
-            rec.feedbackSpan.className = 'feedback-badge feedback-wrong';
+            comp.feedbackSpan.innerHTML = `❌ None correct — try again.`;
+            comp.feedbackSpan.className = 'feedback-badge feedback-wrong';
+            showTempAnswer(comp, wrongBlanks);
         } else {
-            rec.feedbackSpan.innerHTML = `⚠️ ${correctCount}/${total} correct`;
-            rec.feedbackSpan.className = 'feedback-badge feedback-wrong';
+            comp.feedbackSpan.innerHTML = `⚠️ ${correctCount}/${total} correct — keep going!`;
+            comp.feedbackSpan.className = 'feedback-badge feedback-wrong';
+            showTempAnswer(comp, wrongBlanks);
         }
         updateGlobalScore();
     }
-    
+
     function updateGlobalScore() {
         let totalCorrect = 0;
         let totalBlanks = 0;
@@ -604,9 +518,10 @@ Unit 7
     
     function checkAllQuestions() {
         for (const q of allQuestionComponents) {
-            let correctCount = 0;
             const inputs = q.inputs;
             const blanks = q.blanksMeta;
+            let correctCount = 0;
+            const wrongBlanks = [];
             for (let i=0; i<inputs.length; i++) {
                 const inp = inputs[i];
                 const userVal = inp.value;
@@ -619,18 +534,22 @@ Unit 7
                 } else {
                     inp.style.borderColor = "#e27c5c";
                     inp.style.backgroundColor = "#fff1ef";
+                    wrongBlanks.push({ index: i, correctAnswerStr: blanks[i].possibleAnswers.join(' / ') });
                 }
             }
             const total = inputs.length;
             if (correctCount === total && total > 0) {
-                q.feedbackSpan.innerHTML = '✅ Perfect!';
+                q.feedbackSpan.innerHTML = '✅ Perfect! All correct.';
                 q.feedbackSpan.className = 'feedback-badge feedback-correct';
+                clearTempAnswer(q);
             } else if (correctCount === 0) {
-                q.feedbackSpan.innerHTML = '❌ None correct';
+                q.feedbackSpan.innerHTML = `❌ None correct — try again.`;
                 q.feedbackSpan.className = 'feedback-badge feedback-wrong';
+                showTempAnswer(q, wrongBlanks);
             } else {
-                q.feedbackSpan.innerHTML = `⚠️ ${correctCount}/${total} correct`;
+                q.feedbackSpan.innerHTML = `⚠️ ${correctCount}/${total} correct — keep going!`;
                 q.feedbackSpan.className = 'feedback-badge feedback-wrong';
+                showTempAnswer(q, wrongBlanks);
             }
         }
         updateGlobalScore();
@@ -645,6 +564,7 @@ Unit 7
             }
             q.feedbackSpan.innerHTML = '⚡ pending';
             q.feedbackSpan.className = 'feedback-badge';
+            clearTempAnswer(q);
         }
         updateGlobalScore();
     }
@@ -658,18 +578,110 @@ Unit 7
             q.feedbackSpan.className = 'feedback-badge';
             setTimeout(() => {
                 if (q.feedbackSpan.innerHTML.includes('💡')) {
-                    if (!q.feedbackSpan.innerHTML.includes('Perfect') && !q.feedbackSpan.innerHTML.includes('correct')) {
+                    if (!q.feedbackSpan.innerHTML.includes('Perfect') && !q.feedbackSpan.innerHTML.includes('correct') && !q.feedbackSpan.innerHTML.includes('None correct')) {
                         q.feedbackSpan.innerHTML = originalText;
                         q.feedbackSpan.className = originalText.includes('Perfect') ? 'feedback-badge feedback-correct' : (originalText.includes('correct') ? 'feedback-badge feedback-wrong' : 'feedback-badge');
                     }
                 }
             }, 2800);
-            // highlight blanks
             q.inputs.forEach(inp => {
                 inp.style.boxShadow = '0 0 0 2px #ffcd94';
                 setTimeout(() => inp.style.boxShadow = '', 800);
             });
         }
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+        allQuestionComponents = [];
+        let totalBlanks = 0;
+        for (let q of questionBank) totalBlanks += q.blanks.length;
+        document.getElementById('globalScoreDisplay').innerText = `0 / ${totalBlanks}`;
+        
+        let currentUnitGroup = null;
+        let unitDiv = null;
+        let questionsArea = null;
+        
+        for (let idx = 0; idx < questionBank.length; idx++) {
+            const q = questionBank[idx];
+            if (!unitDiv || currentUnitGroup !== q.unit) {
+                if (unitDiv) container.appendChild(unitDiv);
+                unitDiv = document.createElement('div');
+                unitDiv.className = 'unit-card';
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'unit-title';
+                titleDiv.innerText = q.unit;
+                unitDiv.appendChild(titleDiv);
+                questionsArea = document.createElement('div');
+                questionsArea.className = 'questions-list';
+                unitDiv.appendChild(questionsArea);
+                currentUnitGroup = q.unit;
+            }
+            
+            const qRow = document.createElement('div');
+            qRow.className = 'question-row';
+            let blankIndex = 0;
+            const blanksMeta = q.blanks;
+            let renderedHtml = q.raw.replace(/\[([^\]]+)\]\{\.underline\}/g, () => {
+                blankIndex++;
+                return `<span class="blank-input"><input type="text" data-idx="${blankIndex-1}" placeholder="_____" autocomplete="off"></span>`;
+            });
+            const textDiv = document.createElement('div');
+            textDiv.className = 'question-text';
+            textDiv.innerHTML = renderedHtml;
+            qRow.appendChild(textDiv);
+            
+            const footerDiv = document.createElement('div');
+            footerDiv.className = 'question-footer';
+            const checkBtn = document.createElement('button');
+            checkBtn.className = 'check-single';
+            checkBtn.innerHTML = '✓ Check';
+            const feedbackSpan = document.createElement('span');
+            feedbackSpan.className = 'feedback-badge';
+            feedbackSpan.innerText = '⚡ pending';
+            const feedbackArea = document.createElement('div');
+            feedbackArea.className = 'feedback-area';
+            feedbackArea.appendChild(feedbackSpan);
+            footerDiv.appendChild(checkBtn);
+            footerDiv.appendChild(feedbackArea);
+            qRow.appendChild(footerDiv);
+            questionsArea.appendChild(qRow);
+            
+            const inputs = qRow.querySelectorAll('.blank-input input');
+            const inputsArr = Array.from(inputs);
+            const questionRecord = {
+                inputs: inputsArr,
+                blanksMeta: blanksMeta,
+                feedbackSpan: feedbackSpan,
+                tempAnswerSpan: null,
+                timerId: null
+            };
+            allQuestionComponents.push(questionRecord);
+            
+            checkBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                checkSingleQuestion(questionRecord);
+            });
+            
+            inputsArr.forEach(inp => {
+                inp.addEventListener('input', () => {
+                    inp.style.borderColor = "#c9e0bb";
+                    inp.style.backgroundColor = "#fefcf5";
+                    // if user modifies answer, remove temp answer and reset feedback style (optional)
+                    if (questionRecord.feedbackSpan.innerText !== '⚡ pending') {
+                        questionRecord.feedbackSpan.innerHTML = '⚡ pending';
+                        questionRecord.feedbackSpan.className = 'feedback-badge';
+                        clearTempAnswer(questionRecord);
+                    }
+                });
+            });
+        }
+        if (unitDiv) container.appendChild(unitDiv);
+        
+        document.getElementById('checkAllBtn').onclick = () => checkAllQuestions();
+        document.getElementById('resetAllBtn').onclick = () => resetAll();
+        document.getElementById('showAllAnswersBtn').onclick = () => showHints();
     }
     
     renderQuiz();
