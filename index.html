@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>GeoFill | Agricultural Geography Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #f0f7ea;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 1rem;
+            color: #1a3b1a;
+        }
+
+        /* smooth container */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        /* header card */
+        .hero {
+            background: linear-gradient(135deg, #2b6e2f, #1f4f23);
+            border-radius: 2rem;
+            padding: 1.6rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 12px 24px rgba(0, 20, 0, 0.12);
+            color: white;
+            transition: all 0.2s;
+        }
+        .hero h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .hero h1 span {
+            background: #ffdc97;
+            color: #2d5720;
+            font-size: 1.3rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+        }
+        .hero p {
+            margin-top: 0.6rem;
+            opacity: 0.9;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .score-panel {
+            background: #fef7e0;
+            color: #2c5e2a;
+            border-radius: 3rem;
+            padding: 0.75rem 1.2rem;
+            margin-top: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(2px);
+        }
+        .score-badge {
+            background: #2b6e2f;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 3rem;
+            font-size: 1.1rem;
+            font-family: monospace;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            border: none;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary {
+            background: #ffb347;
+            color: #2e3b1f;
+        }
+        .btn-primary:active { transform: scale(0.96); background: #ffa01e; }
+        .btn-secondary {
+            background: #e7f0e4;
+            color: #2d5a2a;
+        }
+        .btn-secondary:active { transform: scale(0.96); background: #d4e4cf; }
+        .btn-outline {
+            background: #fff0e0;
+            color: #b45f1b;
+        }
+        .btn-outline:active { transform: scale(0.96); }
+
+        /* unit cards */
+        .unit-card {
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: 1.8rem;
+            margin-bottom: 1.8rem;
+            overflow: hidden;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+            transition: 0.15s;
+            border: 1px solid rgba(160, 200, 120, 0.5);
+        }
+        .unit-title {
+            background: #3c7840;
+            padding: 0.9rem 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.2px;
+            border-bottom: 2px solid #ffd966;
+        }
+        .questions-list {
+            padding: 1.2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* each question row */
+        .question-row {
+            background: white;
+            border-radius: 1.4rem;
+            padding: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border-left: 6px solid #8bc34a;
+            transition: all 0.2s;
+        }
+        .question-text {
+            font-size: 1rem;
+            line-height: 1.55;
+            color: #1f3b1a;
+            margin-bottom: 1rem;
+            word-break: break-word;
+            font-weight: 500;
+        }
+        .blank-input {
+            display: inline-block;
+            margin: 0 3px;
+        }
+        .blank-input input {
+            width: auto;
+            min-width: 110px;
+            max-width: 190px;
+            padding: 8px 12px;
+            border-radius: 60px;
+            border: 1.5px solid #c9e0bb;
+            background: #fefcf5;
+            font-size: 0.9rem;
+            font-family: 'SF Mono', monospace;
+            text-align: center;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .blank-input input:focus {
+            outline: none;
+            border-color: #6a9c3e;
+            box-shadow: 0 0 0 3px rgba(106, 156, 62, 0.2);
+        }
+        .question-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.7rem;
+        }
+        .check-single {
+            background: #ecf7e7;
+            border: none;
+            padding: 0.45rem 1.2rem;
+            border-radius: 2.5rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #2c682a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.1s;
+        }
+        .check-single:active {
+            background: #d8e9d0;
+            transform: scale(0.97);
+        }
+        .feedback-badge {
+            font-size: 0.8rem;
+            padding: 0.35rem 1rem;
+            border-radius: 2rem;
+            background: #f2f2ea;
+            color: #5a6e4a;
+        }
+        .feedback-correct {
+            background: #dff0df;
+            color: #20662a;
+        }
+        .feedback-wrong {
+            background: #ffe7e4;
+            color: #bc4a2e;
+        }
+
+        footer {
+            text-align: center;
+            margin: 2rem 0 1rem;
+            font-size: 0.7rem;
+            color: #698a58;
+        }
+
+        /* mobile optimizations */
+        @media (max-width: 600px) {
+            body {
+                padding: 0.7rem;
+            }
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            .unit-title {
+                font-size: 1.2rem;
+                padding: 0.7rem 1.2rem;
+            }
+            .questions-list {
+                padding: 1rem;
+                gap: 1.2rem;
+            }
+            .question-row {
+                padding: 1rem;
+            }
+            .blank-input input {
+                min-width: 90px;
+                max-width: 150px;
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            .question-text {
+                font-size: 0.92rem;
+            }
+            .btn, .check-single {
+                padding: 0.45rem 0.9rem;
+                font-size: 0.75rem;
+            }
+            .score-badge {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* very small screens */
+        @media (max-width: 450px) {
+            .blank-input input {
+                min-width: 75px;
+                max-width: 120px;
+            }
+            .action-buttons {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🌾 GeoFill <span>Agriculture Quiz</span></h1>
+        <p>Master China's farming systems, sustainability & global food issues — fill in each blank, then check your answers.</p>
+        <div class="score-panel">
+            <span>📈 Your progress</span>
+            <span class="score-badge" id="globalScoreDisplay">0 / 0</span>
+            <div class="action-buttons">
+                <button id="checkAllBtn" class="btn btn-primary">✅ Check all</button>
+                <button id="resetAllBtn" class="btn btn-secondary">🔄 Clear all</button>
+                <button id="showAllAnswersBtn" class="btn btn-outline">🔍 Show hints</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="questionsContainer"></div>
+    <footer>💡 Case‑insensitive • Synonyms work (e.g., infertile/poor) • Tap a blank to answer</footer>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // Full English question bank (preserves exact format with [answer]{.underline})
+    // Each numbered line is treated as a standalone question
+    // --------------------------------------------------------------
+    const rawQuestionData = `
+Unit 1
+1 The rice consumed in Hong Kong is mainly imported from [Thailand]{.underline} .
+2 [The]{.underline} [Mainland]{.underline} is the major supplier of fresh vegetables in Hong Kong.
+3 In [subsistence]{.underline} farming, farm produce is grown for the farmer's own consumption.
+4 Farming activities that rely on animals and human power to do the farm work are known as [low-technology]{.underline} farming.
+5 Farming includes the growing of [crops]{.underline} and the rearing of [livestock]{.underline} .
+6 Farm produce is mainly used as [food]{.underline} for people and as [raw]{.underline} [material]{.underline} for industries.
+7 A farming system consists of [inputs]{.underline} , [processes]{.underline} and [outputs]{.underline} .
+8 There are [physical]{.underline} and [cultural/human]{.underline} inputs in a farming system.
+9 A farm which practises intensive farming has high [inputs]{.underline} and [outputs]{.underline} per unit area of land.
+10 Farm produce of [market]{.underline} [gardening]{.underline} are cash crops, mainly vegetables and flowers.
+11 Market gardening in the Netherlands is a kind of commercial farming which involves the growing of [cash]{.underline} crops.
+
+Unit 2
+1 The type of farming practised in the Huanan region is mainly intensive [arable]{.underline} farming, with rice and vegetables as major outputs.
+2 Rainfall generally [decreases]{.underline} from south-east to north-west in China.
+3 The best farmland is found in eastern China along the [river]{.underline} [valley]{.underline} or along the coast.
+4 A farming region is an area growing the same major types of crops or raising the same types of livestock, using similar [farming]{.underline} [methods]{.underline} .
+5 [Climate]{.underline} and [relief]{.underline} are important factors affecting the distribution of farming regions in China.
+6 [Growing]{.underline} [season]{.underline} refers to the period of a year when crops can be grown.
+7 The rainfall in the Huanan region is [high]{.underline} , so it is suitable for growing paddy rice.
+8 The Xibei region is not favourable for growing crops because the growing season is [short]{.underline} .
+9 [Pastoral]{.underline} farming is often practised in western China because of rugged relief and low rainfall.
+10 Western China is mountainous and the soil is often thin and [infertile/poor]{.underline} .
+11 Plains have [gentle]{.underline} relief and [fertile]{.underline} soil. They are usually good places for farming.
+12 In China, most of the farmland is located in the [eastern]{.underline} part where plains and hills are found.
+13 The Huabei Pingyuan is a plain found in the [eastern]{.underline} part of China.
+
+Unit 3
+1 Food shortages will slow down the country's [economic]{.underline} [development]{.underline} , or even result in [social]{.underline} unrest.
+2 Food shortages occur when food [demand]{.underline} is greater than food [supply]{.underline} .
+3 The larger the population size, the [larger]{.underline} the food demand.
+4 When people have high income, they tend to consume more [meat]{.underline} and dairy products but fewer [staple]{.underline} [foods]{.underline} .
+5 China can produce enough food for its people. Therefore, the [self-sufficiency]{.underline} rate of food in China is high.
+
+Unit 4
+1 In northern and north-western China, the rainfall is [low]{.underline} and the winters are very [cold]{.underline} and [long]{.underline} . Such climate hinders the growing of [crops]{.underline} .
+2 There is limited [flat]{.underline} land for farming in western China. This is because the relief there is particularly rugged, with many highlands and [mountains]{.underline} .
+3 Rapid [urban]{.underline} [development]{.underline} takes up large areas of farmland at the edge of cities.
+4 In China, some of the farmland is polluted by solid waste and sewage from [factories]{.underline} and [farms]{.underline} .
+5 Solid waste and sewage from factories and farms cause high levels of heavy [metals]{.underline} and farm [chemicals]{.underline} in the soil.
+6 Over- [cultivation]{.underline} will use up soil nutrients and moisture quickly. In the long run, the [productivity]{.underline} of land drops.
+7 Removing natural vegetation for farming may cause soil [erosion]{.underline} . This decreases the productivity of [land]{.underline} . This process is called [desertification]{.underline} .
+8 Urban development in China's cities leads to a shortage of [farm]{.underline} [labour]{.underline} in rural areas.
+9 [Natural]{.underline} [hazards]{.underline} such as flooding, droughts and pests can destroy crops and lower farm production.
+
+Unit 5
+1 When groundwater is tapped faster than it can be replenished, the [water]{.underline} [table]{.underline} will drop.
+2 The [construction]{.underline} and [operating]{.underline} costs of advanced greenhouses are high.
+3 [Drought]{.underline}-resistant GM crops can be grown in areas with low rainfall.
+4 Growing GM crops on a large farm reduces [biodiversity]{.underline} as they eliminate pests, weeds and other plants as well.
+5 [Capital]{.underline} and [technological]{.underline} know-how are necessary when using scientific farming methods.
+6 'Scientific farming methods' refers to the use of [technology]{.underline} in farming.
+7 Irrigation can overcome the problem of [water]{.underline} shortages.
+8 [Irrigation]{.underline} systems provide water supply for semi-arid areas. Thus, these areas can be developed into farmland.
+9 The use of chemical fertilizers can make the soil [rich/fertile]{.underline} while pesticides can control [pests]{.underline} .
+10 Excess [chemical]{.underline} [fertilizers]{.underline} washed into rivers speed up the growth of algae. Oxygen in the water will be used up quickly.
+11 Overuse of pesticides will lead to the development of stronger [pests]{.underline} , which resist pesticides.
+12 To solve the problem of labour shortage, Chinese farmers use [machines]{.underline} to do farm work and improve farming efficiency.
+13 The environmental conditions are controlled inside a [greenhouse]{.underline} . This helps lengthen the [growing]{.underline} [season]{.underline} .
+
+Unit 6
+1 Sustainable farming relies on the combination of traditional [knowledge]{.underline} and modern [technologies]{.underline} .
+2 Rice-duck farming can conserve soil because [manure]{.underline} from ducks provides nutrients for the soil.
+3 Drip irrigation can reduce water [wastage]{.underline} and loss of water through [evaporation]{.underline} .
+4 By turning [degraded]{.underline} farmland back into woodland or grassland, we can prevent soil [erosion]{.underline} and desertification.
+5 Farm specialisation can speed up farm [mechanisation]{.underline} . It also increases the productivity of land and the farm as a whole.
+6 Sustainable farming meets the principles of [social]{.underline} progress, [environmental]{.underline} conservation and [economic]{.underline} growth.
+7 Farmers can use [organic]{.underline} [fertilizers]{.underline} such as dead plants and manure from livestock to replace chemical fertilizers, thus avoiding chemicals.
+8 By carrying out [crop]{.underline} [rotation]{.underline} , mixed farming, [fallowing]{.underline} and [drip]{.underline} [irrigation]{.underline} , farmers can conserve soil and water.
+9 Through [fallowing]{.underline} , farmers can leave the field to rest for a period of time after cropping. The soil will have time to recover its nutrients.
+10 Developing [sustainable]{.underline} farming and better [land]{.underline} [use]{.underline} management are solutions to farming problems in China.
+11 The Central Government encourages farmers to practise farm [specialisation]{.underline} to grow a particular type or only a few types of crops in regions with favourable conditions.
+
+Unit 7
+1 Farmers in the Sahel can only use simple and traditional farming methods because their farming technology is [low]{.underline} . Therefore, local food production is [low]{.underline} .
+2 Wars and conflict lower a country's food production by disrupting [farm]{.underline} production and destroying [crops]{.underline} .
+3 [Crop]{.underline} [rotation]{.underline} involves growing different crops each year on the same field. By practising this in the poor soil of the Sahel, it prevents the depletion of certain soil nutrients. This conserves soil.
+4 Covering the fields with [crop]{.underline} [residues]{.underline} can protect the fields from soil erosion.
+5 The physical limitations of farming in North Korea include harsh [climate]{.underline} , limited farmland and [natural]{.underline} [hazards]{.underline} .
+6 In general, [less]{.underline} developed countries are characterised by a low level of development.
+7 In the Sahel, the annual rainfall is [low]{.underline} and [unstable/unreliable]{.underline} .
+8 The rapid increase in [population]{.underline} in the Sahel has created a great demand for food.
+9 The most direct and immediate solution to food shortages in the Sahel is to provide [food]{.underline} [aid]{.underline} .
+10 In the Sahel, farmers dig [small]{.underline} [pits]{.underline} in the field to catch water.
+11 [Poverty]{.underline} is the root problem of food shortages in the Sahel. Therefore, the best solution is to develop the [rural]{.underline} [economy]{.underline} .
+`;
+
+    // ------- parser: split into units & questions -------
+    function parseFullText(text) {
+        const lines = text.split(/\r?\n/);
+        let units = [];
+        let currentUnit = "Start";
+        let currentQuestions = [];
+        
+        for (let line of lines) {
+            line = line.trim();
+            if (line === "") continue;
+            if (/^Unit\s+\d+/i.test(line)) {
+                if (currentQuestions.length > 0) {
+                    currentQuestions.forEach(q => {
+                        units.push({ unit: currentUnit, raw: q, blanks: extractBlanks(q) });
+                    });
+                }
+                currentUnit = line.replace(/\./g, '').trim();
+                currentQuestions = [];
+                continue;
+            }
+            if (/^\d+\./.test(line)) {
+                currentQuestions.push(line);
+            } else {
+                if (currentQuestions.length > 0) {
+                    let last = currentQuestions.length - 1;
+                    currentQuestions[last] += " " + line;
+                } else {
+                    // edge case: line without number but belongs to prior? ignore but safe
+                    if(currentQuestions.length === 0 && currentUnit !== "Start") {
+                        currentQuestions.push(line);
+                    }
+                }
+            }
+        }
+        if (currentQuestions.length > 0) {
+            currentQuestions.forEach(q => {
+                units.push({ unit: currentUnit, raw: q, blanks: extractBlanks(q) });
+            });
+        }
+        return units;
+    }
+    
+    function extractBlanks(questionStr) {
+        const regex = /\[([^\]]+)\]\{\.underline\}/g;
+        const blanks = [];
+        let match;
+        while ((match = regex.exec(questionStr)) !== null) {
+            let ansRaw = match[1].trim();
+            let possible = ansRaw.split('/').map(a => a.trim().toLowerCase());
+            blanks.push({ possibleAnswers: possible });
+        }
+        return blanks;
+    }
+    
+    const questionBank = parseFullText(rawQuestionData);
+    let allQuestionComponents = []; // store each DOM wrapper + metadata
+    
+    // answer comparison (flexible)
+    function isAnswerMatch(userInput, possibleSet) {
+        let normalized = userInput.trim().toLowerCase().replace(/[^\w\s\u4e00-\u9fa5\-]/g, '').replace(/\s+/g, ' ').trim();
+        for (let std of possibleSet) {
+            let stdNorm = std.toLowerCase().replace(/[^\w\s\u4e00-\u9fa5\-]/g, '').replace(/\s+/g, ' ').trim();
+            if (normalized === stdNorm) return true;
+            if (stdNorm.includes('-') && normalized === stdNorm.replace(/-/g, ' ')) return true;
+            if (normalized.includes('-') && normalized.replace(/-/g, ' ') === stdNorm) return true;
+        }
+        return false;
+    }
+    
+    // render entire page
+    function renderQuiz() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+        allQuestionComponents = [];
+        let totalBlanks = 0;
+        for (let q of questionBank) totalBlanks += q.blanks.length;
+        document.getElementById('globalScoreDisplay').innerText = `0 / ${totalBlanks}`;
+        
+        let currentUnitGroup = null;
+        let unitDiv = null;
+        let questionsArea = null;
+        
+        for (let idx = 0; idx < questionBank.length; idx++) {
+            const q = questionBank[idx];
+            // if unit changes, create new unitCard
+            if (!unitDiv || currentUnitGroup !== q.unit) {
+                if (unitDiv) container.appendChild(unitDiv);
+                unitDiv = document.createElement('div');
+                unitDiv.className = 'unit-card';
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'unit-title';
+                titleDiv.innerText = q.unit;
+                unitDiv.appendChild(titleDiv);
+                questionsArea = document.createElement('div');
+                questionsArea.className = 'questions-list';
+                unitDiv.appendChild(questionsArea);
+                currentUnitGroup = q.unit;
+            }
+            
+            // create question row
+            const qRow = document.createElement('div');
+            qRow.className = 'question-row';
+            // replace blanks with input fields
+            let blankIndex = 0;
+            const blanksMeta = q.blanks;
+            let renderedHtml = q.raw.replace(/\[([^\]]+)\]\{\.underline\}/g, () => {
+                const ansMeta = blanksMeta[blankIndex];
+                blankIndex++;
+                return `<span class="blank-input"><input type="text" data-idx="${blankIndex-1}" placeholder="_____" autocomplete="off"></span>`;
+            });
+            const textDiv = document.createElement('div');
+            textDiv.className = 'question-text';
+            textDiv.innerHTML = renderedHtml;
+            qRow.appendChild(textDiv);
+            
+            const footerDiv = document.createElement('div');
+            footerDiv.className = 'question-footer';
+            const checkBtn = document.createElement('button');
+            checkBtn.className = 'check-single';
+            checkBtn.innerHTML = '✓ Check';
+            const feedbackSpan = document.createElement('span');
+            feedbackSpan.className = 'feedback-badge';
+            feedbackSpan.innerText = '⚡ pending';
+            footerDiv.appendChild(checkBtn);
+            footerDiv.appendChild(feedbackSpan);
+            qRow.appendChild(footerDiv);
+            questionsArea.appendChild(qRow);
+            
+            // collect input fields
+            const inputs = qRow.querySelectorAll('.blank-input input');
+            const inputsArr = Array.from(inputs);
+            const questionRecord = {
+                row: qRow,
+                inputs: inputsArr,
+                blanksMeta: blanksMeta,
+                feedbackSpan: feedbackSpan,
+                checkBtn: checkBtn
+            };
+            allQuestionComponents.push(questionRecord);
+            
+            // bind check event
+            checkBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                checkSingleQuestion(questionRecord);
+            });
+            
+            // optional: on input change reset border style gently (not needed for core)
+            inputsArr.forEach(inp => {
+                inp.addEventListener('input', () => {
+                    inp.style.borderColor = "#c9e0bb";
+                    inp.style.backgroundColor = "#fefcf5";
+                });
+            });
+        }
+        if (unitDiv) container.appendChild(unitDiv);
+        
+        // attach global buttons
+        document.getElementById('checkAllBtn').onclick = () => checkAllQuestions();
+        document.getElementById('resetAllBtn').onclick = () => resetAll();
+        document.getElementById('showAllAnswersBtn').onclick = () => showHints();
+    }
+    
+    function checkSingleQuestion(rec) {
+        let correctCount = 0;
+        const inputs = rec.inputs;
+        const blanks = rec.blanksMeta;
+        for (let i=0; i<inputs.length; i++) {
+            const inp = inputs[i];
+            const userAnswer = inp.value;
+            const possible = blanks[i].possibleAnswers;
+            const correct = isAnswerMatch(userAnswer, possible);
+            if (correct) {
+                correctCount++;
+                inp.style.borderColor = "#5fad41";
+                inp.style.backgroundColor = "#e6f5e3";
+            } else {
+                inp.style.borderColor = "#e27c5c";
+                inp.style.backgroundColor = "#fff1ef";
+            }
+        }
+        const total = inputs.length;
+        if (correctCount === total && total > 0) {
+            rec.feedbackSpan.innerHTML = '✅ Perfect!';
+            rec.feedbackSpan.className = 'feedback-badge feedback-correct';
+        } else if (correctCount === 0) {
+            rec.feedbackSpan.innerHTML = '❌ None correct';
+            rec.feedbackSpan.className = 'feedback-badge feedback-wrong';
+        } else {
+            rec.feedbackSpan.innerHTML = `⚠️ ${correctCount}/${total} correct`;
+            rec.feedbackSpan.className = 'feedback-badge feedback-wrong';
+        }
+        updateGlobalScore();
+    }
+    
+    function updateGlobalScore() {
+        let totalCorrect = 0;
+        let totalBlanks = 0;
+        for (const q of allQuestionComponents) {
+            totalBlanks += q.inputs.length;
+            for (let i=0; i<q.inputs.length; i++) {
+                const val = q.inputs[i].value;
+                const possible = q.blanksMeta[i].possibleAnswers;
+                if (isAnswerMatch(val, possible)) totalCorrect++;
+            }
+        }
+        document.getElementById('globalScoreDisplay').innerText = `${totalCorrect} / ${totalBlanks}`;
+    }
+    
+    function checkAllQuestions() {
+        for (const q of allQuestionComponents) {
+            let correctCount = 0;
+            const inputs = q.inputs;
+            const blanks = q.blanksMeta;
+            for (let i=0; i<inputs.length; i++) {
+                const inp = inputs[i];
+                const userVal = inp.value;
+                const possible = blanks[i].possibleAnswers;
+                const ok = isAnswerMatch(userVal, possible);
+                if (ok) {
+                    correctCount++;
+                    inp.style.borderColor = "#5fad41";
+                    inp.style.backgroundColor = "#e6f5e3";
+                } else {
+                    inp.style.borderColor = "#e27c5c";
+                    inp.style.backgroundColor = "#fff1ef";
+                }
+            }
+            const total = inputs.length;
+            if (correctCount === total && total > 0) {
+                q.feedbackSpan.innerHTML = '✅ Perfect!';
+                q.feedbackSpan.className = 'feedback-badge feedback-correct';
+            } else if (correctCount === 0) {
+                q.feedbackSpan.innerHTML = '❌ None correct';
+                q.feedbackSpan.className = 'feedback-badge feedback-wrong';
+            } else {
+                q.feedbackSpan.innerHTML = `⚠️ ${correctCount}/${total} correct`;
+                q.feedbackSpan.className = 'feedback-badge feedback-wrong';
+            }
+        }
+        updateGlobalScore();
+    }
+    
+    function resetAll() {
+        for (const q of allQuestionComponents) {
+            for (const inp of q.inputs) {
+                inp.value = '';
+                inp.style.borderColor = "#c9e0bb";
+                inp.style.backgroundColor = "#fefcf5";
+            }
+            q.feedbackSpan.innerHTML = '⚡ pending';
+            q.feedbackSpan.className = 'feedback-badge';
+        }
+        updateGlobalScore();
+    }
+    
+    function showHints() {
+        for (const q of allQuestionComponents) {
+            const blanks = q.blanksMeta;
+            const hintMsg = blanks.map((b, idx) => `#${idx+1}: ${b.possibleAnswers.join(' / ')}`).join(' · ');
+            const originalText = q.feedbackSpan.innerHTML;
+            q.feedbackSpan.innerHTML = `💡 ${hintMsg}`;
+            q.feedbackSpan.className = 'feedback-badge';
+            setTimeout(() => {
+                if (q.feedbackSpan.innerHTML.includes('💡')) {
+                    if (!q.feedbackSpan.innerHTML.includes('Perfect') && !q.feedbackSpan.innerHTML.includes('correct')) {
+                        q.feedbackSpan.innerHTML = originalText;
+                        q.feedbackSpan.className = originalText.includes('Perfect') ? 'feedback-badge feedback-correct' : (originalText.includes('correct') ? 'feedback-badge feedback-wrong' : 'feedback-badge');
+                    }
+                }
+            }, 2800);
+            // highlight blanks
+            q.inputs.forEach(inp => {
+                inp.style.boxShadow = '0 0 0 2px #ffcd94';
+                setTimeout(() => inp.style.boxShadow = '', 800);
+            });
+        }
+    }
+    
+    renderQuiz();
+</script>
+</body>
+</html>
